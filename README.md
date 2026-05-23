@@ -1,82 +1,121 @@
 # 🏍️ Bike Rental System
 
-![MongoDB](https://img.shields.io/badge/MongoDB-green?logo=mongodb&logoColor=white)
-![Express](https://img.shields.io/badge/Express-black?logo=express&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-lightgreen?logo=node.js&logoColor=white)
-![EJS](https://img.shields.io/badge/EJS-red?logo=ejs&logoColor=white)
-![Cloudinary](https://img.shields.io/badge/Cloudinary-blue?logo=cloudinary&logoColor=white)
-![Open Source](https://img.shields.io/badge/Open%20Source-💻-brightgreen)
-![Made with ❤️ by Aniket](https://img.shields.io/badge/Made%20with-❤️-red)
-
-> 🚲 A complete **Bike Rental Web Platform** where users can **browse bikes, book bikes, and manage rentals**, while **admins manage bikes, bookings, and dashboard** — built using **MongoDB, Express, Node.js, and EJS**.
+Lightweight bike rental web application built with Node.js, Express, MongoDB and EJS. Users can browse and book bikes; admins can manage bikes, users and bookings. This README explains setup, environment variables, available scripts and key routes.
 
 ---
 
-## 🚀 Overview
+**Quick status**
 
-This is a **full-stack bike rental system** designed to manage online bike bookings.
-
-✔ Users can **signup/login**, search bikes, book bikes & manage rentals  
-✔ Admins can **add/delete/update bikes**, upload bike images to Cloudinary, manage users & bookings  
-✔ Includes **authentication, authorization, cloud storage, and booking handling**
+- Local server: `server.js` (Express)
+- DB: MongoDB (mongoose)
+- Views: EJS templates in `views/`
 
 ---
 
-## 🧰 Tech Stack
+**Prerequisites**
 
-| Tech | Description |
-|------|-------------|
-| 🗄️ MongoDB | Stores users, bookings & bikes |
-| ⚙️ Express.js | Backend server & routing |
-| 🟢 Node.js | Runtime environment |
-| 🖥️ EJS | Dynamic UI rendering |
-| 🔐 bcrypt / JWT | Authentication & encryption |
-| ☁️ Cloudinary | Bike image storage |
-| 🎨 CSS | Frontend UI styling |
+- Node.js v16+ or newer
+- MongoDB running locally or a MongoDB Atlas connection string
+- (Optional) Cloudinary account for image uploads
 
 ---
 
-## ⚙️ Features
+## Setup
 
-### 👤 User
-- Signup & Login
-- Browse all bikes
-- View bike details with images
-- Book a bike (date-wise booking)
-- View booking history
+1. Install dependencies
 
-### 🛡 Admin
-- Add / Edit / Delete bikes
-- Upload multiple bike images to Cloudinary
-- Change bike availability (Available / Unavailable)
-- View & manage users
-- View & manage user bookings
-- Dashboard with statistics
-
----
-
-## 🔄 How It Works
-
-1️⃣ **Authentication**
-- Password hashing using bcrypt  
-- Session/JWT based login  
-- Role-based access (User/Admin)
-
-2️⃣ **Bike Management**
-- Admin adds bikes with details + images  
-- Stored in MongoDB & Cloudinary
-
-3️⃣ **Booking System**
-- Users select dates and book available bikes  
-- Availability auto-updates to prevent double booking
-
----
-
-## 💻 Setup & Usage
-
-### 1️⃣ Clone the repo
 ```bash
-git clone https://github.com/yourusername/bike-rental-system.git
-cd bike-rental-system
-npm i
-node script.js
+npm install
+```
+
+2. Create a `.env` file at the project root (see example below) and set environment variables.
+
+Example `.env`:
+
+```
+MONGO_URI=mongodb://127.0.0.1:27017/bike_rental
+PORT=5000
+# Optional Cloudinary vars used by `config/cloudinary.js`
+CLOUD_NAME=your_cloud_name
+CLOUD_API_KEY=your_api_key
+CLOUD_API_SECRET=your_api_secret
+```
+
+3. Start the app (development)
+
+```bash
+npm run dev   # or use: nodemon server.js
+```
+
+Start (production)
+
+```bash
+npm start
+```
+
+---
+
+## Environment variables
+
+- `MONGO_URI` — MongoDB connection string (required)
+- `PORT` — Server port (default `5000`)
+- `CLOUD_NAME`, `CLOUD_API_KEY`, `CLOUD_API_SECRET` — Cloudinary credentials (optional)
+
+The project expects `MONGO_URI` (see `config/db.js`) — ensure your `.env` uses that key.
+
+---
+
+## Project structure
+
+- `server.js` — App entry
+- `config/` — DB and Cloudinary config
+- `controllers/` — Request handlers
+- `models/` — Mongoose models: `Bike`, `User`, `Booking`
+- `routes/` — Express routes
+- `views/` — EJS templates
+- `public/` — Static assets (CSS)
+
+---
+
+## Useful scripts
+
+- `npm run dev` — Run with `nodemon` for development
+- `npm start` — Start the server with `node server.js`
+
+Check `package.json` for exact script names.
+
+---
+
+## Important routes (overview)
+
+- `/` — Home page (browse bikes)
+- `/auth/*` — Signup / Login routes
+- `/bikes/*` — Bike listing, details, booking
+- `/admin/*` — Admin dashboard and bike management
+
+See the route files in `routes/` for full details.
+
+---
+
+## Troubleshooting
+
+- If you see: `The \`uri\` parameter to \`openUri()\` must be a string, got "undefined"` — ensure `MONGO_URI` is set in your `.env` and `config/db.js` uses `process.env.MONGO_URI`.
+- If port `5000` is already in use, stop the process using that port or change `PORT` in `.env`.
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create a feature branch
+3. Open a PR with a clear description
+
+---
+
+## License
+
+This project is open-source. Add a license if desired.
+
+---
+
+If you'd like, I can also add a short `CONTRIBUTING.md` or expand the routes list with exact endpoints from the `routes/` files.
